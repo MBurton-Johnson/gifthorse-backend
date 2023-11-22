@@ -19,10 +19,14 @@ from django.urls import path, include
 from rest_framework import routers
 from rest_framework_simplejwt import views as jwt_views
 from main_app import views
+from main_app.views import GiftViewSet, OccasionViewSet, RecipientViewSet
 
 router = routers.DefaultRouter()
-# router.register(r'users', views.UserViewSet)
-# router.register(r'groups', views.GroupViewSet)
+router.register(r'users', views.UserViewSet)
+router.register(r'groups', views.GroupViewSet)
+router.register(r'gifts', GiftViewSet)
+router.register(r'occasions', OccasionViewSet)
+router.register(r'recipients', RecipientViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

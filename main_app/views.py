@@ -1,13 +1,11 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, permissions, status
-
-# from django.shortcuts import render
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializers import UserSerializer, GroupSerializer, UserRegistrationSerializer
+from .serializers import UserSerializer, GroupSerializer, UserRegistrationSerializer, GiftSerializer, RecipientSerializer, OccasionSerializer
+from .models import Gift, Recipient, Occasion
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
@@ -42,3 +40,15 @@ class UserRegistrationView(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserRegistrationSerializer
     # permission_classes = [AllowAny]
+
+class GiftViewSet(viewsets.ModelViewSet):
+    queryset = Gift.objects.all()
+    serializer_class = GiftSerializer
+
+class RecipientViewSet(viewsets.ModelViewSet):
+    queryset = Recipient.objects.all()
+    serializer_class = RecipientSerializer
+
+class OccasionViewSet(viewsets.ModelViewSet):
+    queryset = Occasion.objects.all()
+    serializer_class = OccasionSerializer
