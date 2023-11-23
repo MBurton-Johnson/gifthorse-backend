@@ -13,9 +13,12 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['url', 'name']
 
 class GiftSerializer(serializers.ModelSerializer):
+    recipient_name = serializers.CharField(source='recipient.name', read_only=True)
+    occasion_name = serializers.CharField(source='occasion.name', read_only=True)
+
     class Meta:
         model = Gift
-        fields = ['id', 'name', 'price', 'currency', 'description', 'occasion', 'datebought', 'status', 'recipient', 'rating', 'created_at', 'updated_at']
+        fields = ['id', 'name', 'price', 'currency', 'description', 'occasion', 'datebought', 'status', 'recipient', 'created_at', 'updated_at', 'recipient_name', 'occasion_name']
 
 class OccasionSerializer(serializers.ModelSerializer):
     class Meta:

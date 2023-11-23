@@ -9,7 +9,6 @@ class Gift(models.Model):
   datebought = models.DateField()
   status = models.CharField(max_length=10, choices=[('Bought', 'Bought'), ('Given', 'Given'), ('Wish List', 'Wish List')], default='Pending')
   recipient = models.ForeignKey('Recipient', on_delete=models.CASCADE)
-  rating = models.IntegerField(choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')])
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)
 

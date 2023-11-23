@@ -45,6 +45,13 @@ class GiftViewSet(viewsets.ModelViewSet):
     queryset = Gift.objects.all()
     serializer_class = GiftSerializer
 
+    def create(self, request, *args, **kwargs):
+        print("Request Data:", request.data)  # Log the incoming request data
+        response = super().create(request, *args, **kwargs)
+        if response.status_code == 400:
+            print("Error Details:", response.data)  # This will log the detailed error
+        return response
+
 class RecipientViewSet(viewsets.ModelViewSet):
     queryset = Recipient.objects.all()
     serializer_class = RecipientSerializer
@@ -52,3 +59,7 @@ class RecipientViewSet(viewsets.ModelViewSet):
 class OccasionViewSet(viewsets.ModelViewSet):
     queryset = Occasion.objects.all()
     serializer_class = OccasionSerializer
+
+    def create(self, request, *args, **kwargs):
+        print(request.data)  # Debugging: print incoming data
+        return super().create(request, *args, **kwargs)

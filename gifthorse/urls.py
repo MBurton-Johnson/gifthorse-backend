@@ -29,6 +29,7 @@ router.register(r'occasions', OccasionViewSet)
 router.register(r'recipients', RecipientViewSet)
 
 urlpatterns = [
+    
     path('admin/', admin.site.urls),
     path('token/', jwt_views.TokenObtainPairView.as_view(), name ='token_obtain_pair'),
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name ='token_refresh'),
