@@ -19,3 +19,4 @@ class Occasion(models.Model):
 class Recipient(models.Model):
   name = models.CharField(max_length=100)
   relation = models.CharField(max_length=100)
+  occasions = models.ManyToManyField('Occasion')

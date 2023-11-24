@@ -19,7 +19,7 @@ from django.urls import path, include
 from rest_framework import routers
 from rest_framework_simplejwt import views as jwt_views
 from main_app import views
-from main_app.views import GiftViewSet, OccasionViewSet, RecipientViewSet
+from main_app.views import GiftViewSet, OccasionViewSet, RecipientViewSet, RecipientOccasionsView, GiftsForOccasionAndRecipient
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
@@ -36,6 +36,9 @@ urlpatterns = [
     path('home/', views.HomeView.as_view(), name ='home'),
     path('logout/', views.LogoutView.as_view(), name ='logout'),
     path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('recipient-occasions/<int:recipient_id>/', RecipientOccasionsView.as_view(), name='recipient-occasions'),
+    path('gifts-for-occasion/<int:occasion_id>/recipient/<int:recipient_id>/', GiftsForOccasionAndRecipient.as_view(), name='gifts-for-occasion-recipient'),
+
 
 ]

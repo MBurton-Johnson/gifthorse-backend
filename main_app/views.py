@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User, Group
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, permissions, status
+from rest_framework.generics import ListAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -63,3 +65,22 @@ class OccasionViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         print(request.data)  # Debugging: print incoming data
         return super().create(request, *args, **kwargs)
+    
+class RecipientOccasionsView(APIView):
+    def get(self, request, recipient_id):
+        recipient = get_object_or_404(Recipient, pk=recipient_id)
+        gifts = Gift.objects.filter(recipient=recipient)
+
+        # Get unique occasions associated with these gifts
+        occasions = Occasion.objects.filter(gift__in=gifts).distinct()
+
+        serializer = OccasionSerializer(occasions, many=True)
+        return Response(serializer.data)
+
+class GiftsForOccasionAndRecipient(ListAPIView):
+    serializer_class = GiftSerializer
+
+    def get_queryset(self):
+        recipient_id = self.kwargs['recipient_id']
+        occasion_id = self.kwargs['occasion_id']
+        return Gift.objects.filter(recipient_id=recipient_id, occasion_id=occasion_id)
